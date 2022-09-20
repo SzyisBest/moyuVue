@@ -21,7 +21,7 @@
                 <span class="menu-text">菜单设置</span>
               </template>
               <el-menu-item-group>
-                <el-menu-item index="1-1">
+                <el-menu-item index="www.kuangstudy.com">
                   <template #title>
                     <el-icon>
                       <Memo/>
@@ -125,14 +125,27 @@
 </template>
 
 <script>
+import api from '@/api/menu/mainView'
+
 export default {
   name: "menu",
   data() {
     return {
-      drawer: true
+      drawer: true,
+      menuList:{},
     }
   },
-  methods: {}
+  methods: {},
+  created() {
+    let params = {
+      type: "学生",
+      id: 1
+    }
+    api.LoadMenuList2(params).then((result)=>{
+      this.menuList = result;
+    })
+
+  }
 }
 </script>
 
