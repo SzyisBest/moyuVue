@@ -3,12 +3,12 @@ import {get,post} from '@/api/axios.config'
 
 export const api = {
     getToken: function getToken (data) {
-        let url = '/login'
+        let url = '/token'
         return post(url,JSON.stringify(data))
     },
-    getToken2: function getToken (data) {
-        let url = '/menuList'
-        return get(url,data)
+    login: function login (data) {
+        let url = '/login'
+        return post(url,JSON.stringify(data))
     }
 }
 

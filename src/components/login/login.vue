@@ -96,13 +96,18 @@ export default {
   },
   methods:{
     login(){
-
+      api.login(this.loginModel).then((data) =>{
+        console.log(data,"查看login 信息");
+      })
     },
   },
   created() {
     api.getToken().then((data) => {
-      checkObject(data.result.object.token)
-      localStorage.setItem('token',data.result.object.token)
+      if(checkObject(data.result.object.token)){
+        localStorage.setItem('token',data.result.object.token)
+      }else{
+        this.$message("warning","Token不能为空")
+      }
     })
   },
 
