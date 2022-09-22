@@ -1,0 +1,9 @@
+@charset "UTF-8";
+@font-face {
+    font-family: "SZY";
+    src: url('~@/assets/font/font1.woff'),
+    url('~@/assets/font/font2.woff2');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}

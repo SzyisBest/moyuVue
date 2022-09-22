@@ -126,6 +126,8 @@
 
 <script>
 import api from '@/api/menu/mainView'
+import api2 from '@/api/login/login'
+
 
 export default {
   name: "menu",
@@ -141,9 +143,13 @@ export default {
       type: "学生",
       id: 1
     }
-    api.LoadMenuList2(params).then((result)=>{
-      this.menuList = result;
-    })
+    // api.LoadMenuList2(params).then((data)=>{
+    //   this.menuList = data.result;
+    //   console.log(this.menuList.object,"=======================");
+    // })
+    // api2.getToken().then((data)=>{
+    //   console.log(data,"===================token==================");
+    // })
 
   }
 }
