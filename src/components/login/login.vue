@@ -15,7 +15,7 @@
           >
             <el-form-item
                 class="input-style"
-                prop="account"
+                prop="username"
             >
               <el-input
                   class="input-text-style"
@@ -23,7 +23,7 @@
                   type="text"
                   prefix-icon="User"
                   placeholder="用户名"
-                  v-model="loginModel.account"/>
+                  v-model="loginModel.username"/>
             </el-form-item>
             <el-form-item
                 prop="password"
@@ -75,7 +75,6 @@
 import api from '@/api/login/login'
 import lottieUrl from '@/assets/animate/lottieA1.json'
 import Lottie from "@/components/lottie/lottie"
-import md5 from 'js-md5';
 
 const {checkObject} = require("@/main");
 
@@ -88,27 +87,32 @@ export default {
       imageUrl: 'https://source.unsplash.com/random',
       lottieUrl: lottieUrl,
       loginModel: {
-        account: '',
+        username: '',
         password: '',
         is_remember: ''
       },
     }
   },
-  methods:{
-    login(){
-      api.login(this.loginModel).then((data) =>{
-        console.log(data,"查看login 信息");
+  methods: {
+    login() {
+      // Token接口
+      api.getToken(this.loginModel).then((data) => {
+        if (checkObject(data.result.object.token)) {
+          console.log(data,"======================TOKEN===================");
+          localStorage.setItem('token', data.result.object.token)
+          // // 登录接口
+          // api.login(this.loginModel).then((data) => {
+          //   console.log(data, "查看login 信息");
+          // })
+        } else {
+          this.$message("warning", "Token不能为空")
+        }
       })
+
     },
   },
   created() {
-    api.getToken().then((data) => {
-      if(checkObject(data.result.object.token)){
-        localStorage.setItem('token',data.result.object.token)
-      }else{
-        this.$message("warning","Token不能为空")
-      }
-    })
+
   },
 
 }
