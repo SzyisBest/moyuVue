@@ -24,6 +24,7 @@ import MoyuHead from './comp/MoyuHead.vue'
 import MoyuFooter from './comp/MoyuFooter.vue'
 import MoyuMainView from './comp/MoyuMainView.vue'
 import MoyuMenu from './comp/MoyuMenu.vue'
+import api from "@/api/menu/mainView";
 
 export default {
   name: "home",
@@ -37,6 +38,11 @@ export default {
     return {
 
     }
+  },
+  created() {
+    api.LoadMenuList().then((data)=>{
+      console.log(data,"==========menu=========")
+    })
   }
 }
 </script>
@@ -44,15 +50,9 @@ export default {
 <style scoped>
 .menu-style{
   width: 11%;
-  background-color: aquamarine;
 }
 .el-main{
 }
 .el-aside {
-}
-.el-footer{
-  padding: 0px;
-  margin: 0px;
-  height: 30px;
 }
 </style>

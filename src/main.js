@@ -16,14 +16,15 @@ for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
 
 //路由全局前置守卫
 router.beforeEach((to,from,next) => {
-    if(to.path === '/register' || to.path === '/login' || to.path === '/'){ //若是进入登录与注册页面 ==> pass
+    //若是进入登录与注册页面 ==> pass
+    if(to.path === '/moyu/register' || to.path === '/moyu/login' || to.path === '/'){
         next()
     }else{
         let userToken = localStorage.getItem('token');
-        console.log("Token为:"+userToken);
+        // console.log("Token为:"+userToken);
         if(userToken == null || userToken == ''){
             alert("无权限，请先登录!");
-            return next('/login');
+            return next('/moyu/login');
         }else{
             next();
         }

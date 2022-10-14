@@ -38,13 +38,22 @@
                   v-model="loginModel.password"/>
             </el-form-item>
             <el-form-item>
-              <div>
-                <el-checkbox
-                    v-model="loginModel.is_remember"
-                    label="是否记住密码"
-                    size="default"
-                />
-              </div>
+              <el-row>
+                <el-col :span="12">
+                  <el-checkbox
+                      v-model="loginModel.is_remember"
+                      label="是否记住密码"
+                      size="default"
+                  />
+                </el-col>
+                <el-col :span="12">
+                  <div class="user-register-style">
+                    <router-link class="user-register-alink" to="/register">
+                      点我注册
+                    </router-link>
+                  </div>
+                </el-col>
+              </el-row>
             </el-form-item>
             <el-form-item>
               <el-button
@@ -75,10 +84,43 @@
 import api from '@/api/login/login'
 import lottieUrl from '@/assets/animate/lottieA1.json'
 import Lottie from "@/components/lottie/lottie"
+// import { useRouter } from "vue-router";
+import router from "@/router/router.config";
 
 const {checkObject} = require("@/main");
 
 export default {
+  // setup() {
+  //   const router = useRouter();
+  //   const loginModel = {
+  //     username: '',
+  //     password: '',
+  //     is_remember: ''
+  //   }
+  //
+  //   function login() {
+  //     // Token接口
+  //     api.getToken(loginModel).then((data) => {
+  //       if (checkObject(data.result.object.token)) {
+  //         localStorage.setItem('token', data.result.object.token)
+  //         router.push({
+  //           name: "home",
+  //         });
+  //         // 登录接口
+  //         // api.login(this.loginModel).then((data) => {
+  //         //   console.log(data, "查看login 信息");
+  //         //
+  //         // })
+  //       } else {
+  //         this.$message("warning", "Token不能为空")
+  //       }
+  //     })
+  //   }
+  //
+  //   return {
+  //     login
+  //   }
+  // },
   name: "login",
   components: {Lottie},
   data() {
@@ -98,17 +140,26 @@ export default {
       // Token接口
       api.getToken(this.loginModel).then((data) => {
         if (checkObject(data.result.object.token)) {
-          console.log(data,"======================TOKEN===================");
           localStorage.setItem('token', data.result.object.token)
-          // // 登录接口
-          // api.login(this.loginModel).then((data) => {
-          //   console.log(data, "查看login 信息");
-          // })
+          // 登录接口
+          let formData = new FormData()
+          formData.append("username", this.loginModel.username)
+          formData.append("password", this.loginModel.password)
+          api.login(formData).then((data) => {
+            console.log(data, "查看login 信息");
+            if(data.status){
+              this.$message.success("登录成功！")
+              router.push({
+                name: 'home'
+              })
+            }else{
+              this.$message.warning(data.message)
+            }
+          })
         } else {
           this.$message("warning", "Token不能为空")
         }
       })
-
     },
   },
   created() {
@@ -119,6 +170,19 @@ export default {
 </script>
 
 <style scoped>
+.user-register-style{
+  width: 230px;
+  text-align: right;
+}
+
+.user-register-alink{
+  color: #409EFF;
+  font-family: 'SZY';
+  font-weight: 400;
+  text-decoration: none;
+}
+
+
 .login-title {
   text-align: center;
   margin-left: 3.5rem;

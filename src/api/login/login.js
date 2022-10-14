@@ -8,6 +8,10 @@ export const api = {
     },
     login: function login (data) {
         let url = '/login'
+        return post(url,data)
+    },
+    register: function register (data) {
+        let url = '/register'
         return post(url,JSON.stringify(data))
     }
 }
