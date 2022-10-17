@@ -138,26 +138,43 @@ export default {
   methods: {
     login() {
       // Token接口
-      api.getToken(this.loginModel).then((data) => {
-        if (checkObject(data.result.object.token)) {
-          localStorage.setItem('token', data.result.object.token)
-          // 登录接口
-          let formData = new FormData()
-          formData.append("username", this.loginModel.username)
-          formData.append("password", this.loginModel.password)
-          api.login(formData).then((data) => {
-            console.log(data, "查看login 信息");
-            if(data.status){
-              this.$message.success("登录成功！")
-              router.push({
-                name: 'home'
-              })
-            }else{
-              this.$message.warning(data.message)
-            }
+      // api.getToken(this.loginModel).then((data) => {
+      //   if (checkObject(data.result.object.token)) {
+      //     localStorage.setItem('token', data.result.object.token)
+      //     // 登录接口
+      //     let formData = new FormData()
+      //     formData.append("username", this.loginModel.username)
+      //     formData.append("password", this.loginModel.password)
+      //     api.login(formData).then((data) => {
+      //       console.log(data, "查看login 信息");
+      //       // if(data.flag){
+      //       //   this.$message.success("登录成功！")
+      //       //   router.push({
+      //       //     name: 'home'
+      //       //   })
+      //       // }else{
+      //       //   this.$message.warning(data.message)
+      //       // }
+      //     })
+      //   } else {
+      //     this.$message("warning", "Token不能为空")
+      //   }
+      // })
+      // 登录接口
+      let formData = new FormData()
+      formData.append("username", this.loginModel.username)
+      formData.append("password", this.loginModel.password)
+      api.login(formData).then((res) => {
+        // console.log(res.config.headers.token, "查看login 信息");
+        localStorage.setItem('token', res.config.headers.token)
+        console.log(res.data, "查看login 信息");
+        if(res.data.flag){
+          this.$message.success("登录成功！")
+          router.push({
+            name: 'home'
           })
-        } else {
-          this.$message("warning", "Token不能为空")
+        }else{
+          this.$message.warning(data.message)
         }
       })
     },

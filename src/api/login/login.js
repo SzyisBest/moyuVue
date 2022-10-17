@@ -1,4 +1,4 @@
-import {get,post} from '@/api/axios.config'
+import {get, post, responsePost} from '@/api/axios.config'
 
 
 export const api = {
@@ -8,7 +8,7 @@ export const api = {
     },
     login: function login (data) {
         let url = '/login'
-        return post(url,data)
+        return responsePost(url,data)
     },
     register: function register (data) {
         let url = '/register'
