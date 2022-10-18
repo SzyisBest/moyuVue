@@ -165,9 +165,7 @@ export default {
       formData.append("username", this.loginModel.username)
       formData.append("password", this.loginModel.password)
       api.login(formData).then((res) => {
-        // console.log(res.config.headers.token, "查看login 信息");
-        localStorage.setItem('token', res.config.headers.token)
-        console.log(res.data, "查看login 信息");
+        localStorage.setItem('token', res.headers.token)
         if(res.data.flag){
           this.$message.success("登录成功！")
           router.push({
